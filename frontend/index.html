@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Manager V2</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <h1 class="app-title">
+                    <i class="fas fa-tasks"></i>
+                    Task Manager V2
+                </h1>
+                <div class="header-stats" id="headerStats">
+                    <div class="stat-item">
+                        <span class="stat-label">Total</span>
+                        <span class="stat-value" id="totalTasks">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Completed</span>
+                        <span class="stat-value" id="completedTasks">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Remaining</span>
+                        <span class="stat-value" id="remainingTasks">0</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Task Form -->
+            <div class="task-form-container">
+                <form id="taskForm" class="task-form">
+                    <div class="form-group">
+                        <label for="taskTitle">Task Title *</label>
+                        <input 
+                            type="text" 
+                            id="taskTitle" 
+                            name="title" 
+                            placeholder="Enter task title..." 
+                            maxlength="100" 
+                            required>
+                        <div class="error-message" id="titleError"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="taskDescription">Description</label>
+                        <textarea 
+                            id="taskDescription" 
+                            name="description" 
+                            placeholder="Enter task description..." 
+                            maxlength="500" 
+                            rows="3"></textarea>
+                        <div class="char-count" id="descCharCount">0/500</div>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-plus"></i>
+                            Add Task
+                        </button>
+                        <button type="button" id="cancelEdit" class="btn btn-secondary" style="display: none;">
+                            <i class="fas fa-times"></i>
+                            Cancel
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Search and Filters -->
+            <div class="controls">
+                <div class="search-container">
+                    <input 
+                        type="text" 
+                        id="searchInput" 
+                        placeholder="Search tasks..." 
+                        class="search-input">
+                    <i class="fas fa-search search-icon"></i>
+                </div>
+                <div class="filter-buttons">
+                    <button class="btn btn-filter active" data-filter="all">
+                        <i class="fas fa-list"></i>
+                        All
+                    </button>
+                    <button class="btn btn-filter" data-filter="incomplete">
+                        <i class="fas fa-clock"></i>
+                        Active
+                    </button>
+                    <button class="btn btn-filter" data-filter="completed">
+                        <i class="fas fa-check"></i>
+                        Completed
+                    </button>
+                </div>
+            </div>
+
+            <!-- Loading Spinner -->
+            <div id="loadingSpinner" class="loading-spinner" style="display: none;">
+                <i class="fas fa-spinner fa-spin"></i>
+                <span>Loading tasks...</span>
+            </div>
+
+            <!-- Error Message -->
+            <div id="errorMessage" class="error-banner" style="display: none;">
+                <i class="fas fa-exclamation-triangle"></i>
+                <span id="errorText"></span>
+                <button id="closeError" class="close-error">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <!-- Tasks Container -->
+            <div class="tasks-container">
+                <div id="tasksList" class="tasks-list">
+                    <!-- Tasks will be dynamically inserted here -->
+                </div>
+                
+                <!-- Empty State -->
+                <div id="emptyState" class="empty-state" style="display: none;">
+                    <div class="empty-icon">
+                        <i class="fas fa-clipboard-list"></i>
+                    </div>
+                    <h3>No tasks found</h3>
+                    <p>Create your first task to get started!</p>
+                </div>
+            </div>
+        </main>
+
+        <!-- Toast Notifications -->
+        <div id="toastContainer" class="toast-container"></div>
+    </div>
+
+    <!-- Task Template -->
+    <template id="taskTemplate">
+        <div class="task-item" data-task-id="">
+            <div class="task-content">
+                <div class="task-checkbox-container">
+                    <input type="checkbox" class="task-checkbox" />
+                    <span class="checkmark"></span>
+                </div>
+                <div class="task-details">
+                    <h3 class="task-title"></h3>
+                    <p class="task-description"></p>
+                    <div class="task-meta">
+                        <span class="task-date"></span>
+                        <span class="task-status"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="task-actions">
+                <button class="btn btn-icon btn-edit" title="Edit task">
+                    <i class="fas fa-edit"></i>
+                </button>
+                <button class="btn btn-icon btn-delete" title="Delete task">
+                    <i class="fas fa-trash"></i>
+                </button>
+            </div>
+        </div>
+    </template>
+
+    <!-- Scripts -->
+    <script src="app.js"></script>
+</body>
+</html>
