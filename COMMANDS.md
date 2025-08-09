@@ -85,8 +85,13 @@ java -jar target/task-manager-api-*.jar
 
 ### Security & Quality
 ```bash
+set this before dependency check run
+export                                     NVD_API_KEY=18510621-025b-47c3-a4a7-d3bdce2880e318510621-025b-47c3-a4a7-d3bdce2880e3
+
 # Run security vulnerability scan
 ./mvnw org.owasp:dependency-check-maven:check
+
+
 
 # View security report
 open target/dependency-check-report.html
